@@ -29,15 +29,7 @@ const HomeScreen = () => {
   };
 
   const deleteItem = index => {
-    const newData = [...data];
-    newData.splice(index, 1);
-    setData(newData);
-  };
-
-  const updateItem = (index, newValue) => {
-    setText(data[index].text);
-    const newData = [...data];
-    newData[index].text = newValue;
+    const newData = data.filter((item, i) => i !== index);
     setData(newData);
   };
 
@@ -49,42 +41,59 @@ const HomeScreen = () => {
           index={item.index}
           text={item.text}
           ondelete={() => deleteItem(index)}
-          onupdate={() => updateItem(index)}
+          onupdate={() => {}}
         />
       ))}
     </ScrollView>
   );
   return (
-    <View>
-      <StatusBar backgroundColor="lightblue" />
-      <View style={{height: 55, width: 420, backgroundColor: 'lightblue'}}>
+    <View style={{backgroundColor: 'yellow', height: 1000}}>
+      <StatusBar backgroundColor="green" />
+      <View style={{height: 55, width: 420, backgroundColor: 'green'}}>
         <Text style={{fontSize: 36, textAlign: 'center', color: 'white'}}>
           My Todo List
         </Text>
       </View>
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', top: 10, marginBottom:20}}>
         <TextInput
           mode="outlined"
           label="Enter todo"
           value={text}
           onChangeText={text => setText(text)}
-          style={{height: 50, width: 250, margin: 15}}
+          style={{
+            height: 50,
+            width: 250,
+            margin: 15,
+            backgroundColor: 'yellow',
+          }}
+          theme={{
+            colors: {
+              primary: 'green', // Change outline color when not focused
+              text: '', // Change text color
+              placeholder: 'green', // Change placeholder color
+            },
+          }}
           right={<TextInput.Icon icon="cloud-upload" />}
         />
         <Button
           style={{
-            width: 110,
+            width: 115,
             height: 50,
             marginTop: 20,
-            backgroundColor: 'lightblue',
+            backgroundColor: 'green',
             borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
           disabled={text.length == 0 ? true : false}
           //   icon="camera"
           mode="contained"
           //   buttonColor='green'
           onPress={handleSubmit}>
-          <Text style={{fontSize: 18, top: 5}}>Submit</Text>
+          <Text
+            style={{fontSize: 20, top: 5, color: 'white', textAlign: 'center'}}>
+            Submit
+          </Text>
         </Button>
       </View>
       {components}

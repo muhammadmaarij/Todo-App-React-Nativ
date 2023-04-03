@@ -7,7 +7,7 @@ const Todo = ({index, text, ondelete, onupdate}) => {
     <View
       style={{
         flexDirection: 'row',
-        borderColor: 'lightblue',
+        borderColor: 'green',
         width: 350,
         height: 50,
         borderRadius: 15,
@@ -21,7 +21,7 @@ const Todo = ({index, text, ondelete, onupdate}) => {
         <Text style={{fontSize: 24, top: 4, left: 10}}>{text}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={{right: 10, top: 2}} onPress={ondelete}>
-        <Icon name="trash" size={36} color="lightblue" />
+        <Icon name="trash" size={36} color="green" />
       </TouchableOpacity>
     </View>
   );
