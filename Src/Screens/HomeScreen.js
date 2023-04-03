@@ -54,7 +54,7 @@ const HomeScreen = () => {
           My Todo List
         </Text>
       </View>
-      <View style={{flexDirection: 'row', top: 10, marginBottom:20}}>
+      <View style={{flexDirection: 'row', top: 10, marginBottom: 20}}>
         <TextInput
           mode="outlined"
           label="Enter todo"
