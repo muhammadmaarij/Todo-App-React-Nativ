@@ -28,9 +28,32 @@ const HomeScreen = () => {
     );
   };
 
-  const components = data.map(item => (
-    <Todo index={item.index} text={item.text} />
-  ));
+  const deleteItem = index => {
+    const newData = [...data];
+    newData.splice(index, 1);
+    setData(newData);
+  };
+
+  const updateItem = (index, newValue) => {
+    setText(data[index].text);
+    const newData = [...data];
+    newData[index].text = newValue;
+    setData(newData);
+  };
+
+  const components = (
+    <ScrollView style={{marginBottom: 30}}>
+      {data.map((item, index) => (
+        <Todo
+          key={item.key}
+          index={item.index}
+          text={item.text}
+          ondelete={() => deleteItem(index)}
+          onupdate={() => updateItem(index)}
+        />
+      ))}
+    </ScrollView>
+  );
   return (
     <View>
       <StatusBar backgroundColor="lightblue" />
@@ -64,7 +87,7 @@ const HomeScreen = () => {
           <Text style={{fontSize: 18, top: 5}}>Submit</Text>
         </Button>
       </View>
-      <ScrollView style={{marginBottom: 30}}>{components}</ScrollView>
+      {components}
     </View>
   );
 };
