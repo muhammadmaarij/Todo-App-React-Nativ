@@ -13,6 +13,8 @@ import Todo from '../Components/Todo';
 const HomeScreen = () => {
   const [data, setData] = useState([]);
   const [text, setText] = useState('');
+  const [edit, setEdit] = useState(0);
+  const [index, setIndex] = useState(999999);
 
   const handleSubmit = () => {
     setData([
@@ -28,9 +30,34 @@ const HomeScreen = () => {
     );
   };
 
+  const onSubmitEdit = () => {
+    editItem(index, text);
+    setEdit(0);
+  };
+
   const deleteItem = index => {
     const newData = data.filter((item, i) => i !== index);
+    const updatedData = newData.map((item, index) => ({
+      ...item,
+      index: index + 1,
+    }));
+    setData(updatedData);
+  };
+
+  const editItem = (index, newText) => {
+    console.log(index);
+    console.log(newText);
+    setEdit(1);
+    const newData = [...data];
+    newData[index] = {...newData[index], text: newText};
     setData(newData);
+    setText('');
+    Keyboard.dismiss();
+    ToastAndroid.showWithGravity(
+      'Item Updated',
+      ToastAndroid.SHORT,
+      ToastAndroid.BOTTOM,
+    );
   };
 
   const components = (
@@ -40,8 +67,14 @@ const HomeScreen = () => {
           key={item.key}
           index={item.index}
           text={item.text}
-          ondelete={() => deleteItem(index)}
-          onupdate={() => {}}
+          ondelete={() => {
+            deleteItem(index);
+          }}
+          onupdate={() => {
+            setText(item.text);
+            setIndex(item.index - 1);
+            setEdit(1);
+          }}
         />
       ))}
     </ScrollView>
@@ -49,7 +82,14 @@ const HomeScreen = () => {
   return (
     <View style={{backgroundColor: 'yellow', height: 1000}}>
       <StatusBar backgroundColor="green" />
-      <View style={{height: 55, width: 420, backgroundColor: 'green'}}>
+      <View
+        style={{
+          height: 55,
+          width: 411,
+          backgroundColor: 'green',
+          borderBottomLeftRadius: 30,
+          borderBottomRightRadius: 30,
+        }}>
         <Text style={{fontSize: 36, textAlign: 'center', color: 'white'}}>
           My Todo List
         </Text>
@@ -73,28 +113,60 @@ const HomeScreen = () => {
               placeholder: 'green', // Change placeholder color
             },
           }}
-          right={<TextInput.Icon icon="cloud-upload" />}
+          right={<TextInput.Icon icon="plus" />}
         />
-        <Button
-          style={{
-            width: 115,
-            height: 50,
-            marginTop: 20,
-            backgroundColor: 'green',
-            borderRadius: 10,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          disabled={text.length == 0 ? true : false}
-          //   icon="camera"
-          mode="contained"
-          //   buttonColor='green'
-          onPress={handleSubmit}>
-          <Text
-            style={{fontSize: 20, top: 5, color: 'white', textAlign: 'center'}}>
-            Submit
-          </Text>
-        </Button>
+        {edit == 0 && (
+          <Button
+            style={{
+              width: 115,
+              height: 50,
+              marginTop: 20,
+              backgroundColor: 'green',
+              borderRadius: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            disabled={text.length == 0 ? true : false}
+            //   icon="camera"
+            mode="contained"
+            //   buttonColor='green'
+            onPress={handleSubmit}>
+            <Text
+              style={{
+                fontSize: 20,
+                top: 5,
+                color: 'white',
+                textAlign: 'center',
+              }}>
+              Submit
+            </Text>
+          </Button>
+        )}
+        {edit == 1 && (
+          <Button
+            style={{
+              width: 115,
+              height: 50,
+              marginTop: 20,
+              backgroundColor: 'green',
+              borderRadius: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            disabled={text.length == 0 ? true : false}
+            mode="contained"
+            onPress={onSubmitEdit}>
+            <Text
+              style={{
+                fontSize: 20,
+                top: 5,
+                color: 'white',
+                textAlign: 'center',
+              }}>
+              Update
+            </Text>
+          </Button>
+        )}
       </View>
       {components}
     </View>
