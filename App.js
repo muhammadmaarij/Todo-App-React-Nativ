@@ -2,8 +2,6 @@ import {View, Text, StyleSheet, StatusBar} from 'react-native';
 import React from 'react';
 import TextField from './Src/Components/TextField';
 import HomeScreen from './Src/Screens/HomeScreen';
-import Digit from './Src/Components/Digit';
-import Calculator from './Src/Screens/Calculator';
 
 // export default class Lab1 extends React.Component {
 //   constructor(props) {
