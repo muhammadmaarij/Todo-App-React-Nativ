@@ -9,7 +9,7 @@ const Todo = ({index, text, ondelete, onupdate}) => {
         flexDirection: 'row',
         borderColor: 'green',
         width: 350,
-        height: 50,
+        maxHeight: 200,
         borderRadius: 15,
         borderWidth: 1,
         margin: 15,
@@ -35,8 +35,16 @@ const Todo = ({index, text, ondelete, onupdate}) => {
             {index}
           </Text>
         </View>
-        <TouchableOpacity onPress={onupdate}>
-          <Text style={{fontSize: 24, top: 7, left: 10, color: 'green'}}>
+        <TouchableOpacity style={{}} onPress={onupdate}>
+          <Text
+            style={{
+              fontSize: 24,
+              top: 7,
+              left: 10,
+              color: 'green',
+              maxWidth: 200,
+              marginBottom: 10,
+            }}>
             {text}
           </Text>
         </TouchableOpacity>
